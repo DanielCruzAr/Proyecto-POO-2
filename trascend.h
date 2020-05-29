@@ -10,26 +10,20 @@ const int CUPO=50;
 class Trascend{
   private:
 
-    Mesa m[CUPO];
-    ComiteTecnico ct[CUPO];
-    Colaboradores col[CUPO];
+    Miembro *m[CUPO]; //Apuntador
 
-    int nMesa,nCT,nCol;
+    int nMiembro;
     float fondos;
 
   public:
     Trascend(); //por default
 
     //getters de las variables privadas
-    float getFondos();
+    float getFondos(){return fondos;}
 
-    void printMesa();
-    void printCT();
-    void printColaboradores();
+    void llenaMiembros();
 
-    void llenaMesa();
-    void llenaCT();
-    void llenaCol();
+    void printMiembro(string);
 
     //Informacion del grupo
     void informacion();
@@ -40,76 +34,57 @@ class Trascend{
     void infoCol();
 
     //Metodos
-    void agregaMesa(string,string,string);
-    void agregaCT(string,string,string);
-    void agregaColaborador(string,string,string);
+    void agregaMesa(string,string,string,string);
+    void agregaCT(string,string,string,string);
+    void agregaColaborador(string,string,string,string);
     void agregaFondos(float);
     bool cambiaCargoM(string);
     bool cambiaCargoCT(string);
     bool cambiaNivelCol(string);
 
+    //borrar
+    void borra(){for(int i=0;i<nMiembro;i++){delete m[i];}}
+
 };
 
 Trascend::Trascend(){
- nMesa=0;
- nCT=0;
- nCol=0;
-
+ nMiembro=0;
  fondos=0;
 
 }
 
-void Trascend::llenaMesa(){
+void Trascend::llenaMiembros(){
 
-  m[0]= Mesa("Carlos Sanchez","A01702188","presidente");
-  nMesa++;
-  m[1]= Mesa("Rafael Romo","A01701493","vicepresidente");
-  nMesa++;
-  m[2]= Mesa("Alejandra Lopez","A01702071","tesoreria");
-  nMesa++;
-  m[3]= Mesa("Romina Gramlich","A01701313","publicidad");
-  nMesa++;
-  m[4]= Mesa("Daniel Cruz","A01701370","patrocinios");
-  nMesa++;
+    //mesa
+    m[nMiembro]=new Mesa("Carlos Sanchez","A01702188","mesa","presidente");
+    nMiembro++;
+    m[nMiembro]=new Mesa("Rafael Romo","A01701493","mesa","vicepresidente");
+    nMiembro++;
+    m[nMiembro]=new Mesa("Alejandra Lopez","A01702071","mesa","tesoreria");
+    nMiembro++;
+    m[nMiembro]=new Mesa("Romina Gramlich","A01701313","mesa","publicidad");
+    nMiembro++;
+    m[nMiembro]=new Mesa("Daniel Cruz","A01701370","mesa","patrocinios");
+    nMiembro++;
 
-}
+    //ct
+    m[nMiembro]=new ComiteTecnico("Emilio Valdez","A01704832","CT","cursos");
+    nMiembro++;
+    m[nMiembro]=new ComiteTecnico("Balam Bravo","A01703834","CT","cursos");
+    nMiembro++;
 
-void Trascend::llenaCT(){
-
- ct[0]=ComiteTecnico("Emilio Valdez","A01704832","cursos");
- nCT++;
- ct[1]=ComiteTecnico("Balam Bravo","A01703834","cursos");
- nCT++;
-
-}
-
-void Trascend::llenaCol(){
-
- col[0]=Colaboradores("Juan Pérez","A00000000","C");
- nCol++;
+    //col
+    m[nMiembro]=new Colaboradores("Juan Pérez","A00000000","colaborador","C");
+    nMiembro++;
 
 }
 
-float Trascend::getFondos(){
-  return fondos;
-}
-
-void Trascend::printMesa(){
-  for(int i=0;i<nMesa;i++){
-    cout << m[i].strMesa() << endl;
-  }
-}
-
-void Trascend::printCT(){
-  for(int i=0;i<nCT;i++){
-    cout << ct[i].strComTec() << endl;
-  }
-}
-
-void Trascend::printColaboradores(){
-  for(int i=0;i<nCol;i++){
-    cout << col[i].strColaborador() << endl;
-  }
+void Trascend::printMiembro(string member){
+    for(int i=0;i<nMiembro;i++){
+        if(m[i]->getTM()==member){
+            cout << m[i]->strMiembro() << endl;
+        }
+    }
 }
 
 void Trascend::informacion(){
@@ -154,23 +129,20 @@ void Trascend::infoCol(){
       << "\n Colaborar en vendimias, logística y difusión del grupo. \n" << endl;
 }
 
-void Trascend::agregaMesa(string nom,string mat,string carg){
-    Mesa nuevaMesa(nom,mat,carg);
-    m[nMesa]=nuevaMesa;
-    nMesa++;
+void Trascend::agregaMesa(string nom,string mat,string tm,string carg){
+    m[nMiembro]=new Mesa(nom,mat,tm,carg);
+    nMiembro++;
 }
 
 
-void Trascend::agregaCT(string nom,string mat,string carg){
-    ComiteTecnico nuevoCT(nom,mat,carg);
-    ct[nCT]=nuevoCT;
-    nCT++;
+void Trascend::agregaCT(string nom,string mat,string tm,string carg){
+    m[nMiembro]=new ComiteTecnico(nom,mat,tm,carg);
+    nMiembro++;
 }
 
-void Trascend::agregaColaborador(string nom,string mat,string lvl){
-    Colaboradores nuevoColaborador(nom,mat,lvl);
-    col[nCol]=nuevoColaborador;
-    nCol++;
+void Trascend::agregaColaborador(string nom,string mat,string tm,string lvl){
+    m[nMiembro]=new Colaboradores(nom,mat,tm,lvl);
+    nMiembro++;
 }
 
 void Trascend::agregaFondos(float fond){
@@ -182,14 +154,16 @@ Las 2 funciones a continuacion primero reciben un string con la matricula del al
 quiera buscar para cambiarle el rango si pretenece a la mesa o al comite tecnico.
 Si la funcion encuentra al alumno, pide un input con el nuevo cargo y devuelve verdadero.
 Si no lo encuentra devuelve false.
-*/
+
+Sin embargo aun tengo que ajustarlas al polimorfismo
+
 bool Trascend::cambiaCargoM(string mat){
    string nc;
-   for(int i=0;i<nMesa;i++){
-     if(mat==m[i].getMatricula()){
+   for(int i=0;i<nMiembro;i++){
+     if(mat==m[i]->getMatricula()){
         cout << "Persona encontrada, introduce nuevo cargo \n";
         cin >> nc;
-        m[i].NuevoCargo(nc);
+        m[i]->NuevoCargo(nc);
         return true;
      }
    }
@@ -198,11 +172,11 @@ bool Trascend::cambiaCargoM(string mat){
 
 bool Trascend::cambiaCargoCT(string mat){
    string nc;
-   for(int i=0;i<nMesa;i++){
-     if(mat==ct[i].getMatricula()){
+   for(int i=0;i<nMiembro;i++){
+     if(mat==m[i]->getMatricula()){
         cout << "Persona encontrada, introduce nuevo cargo \n";
         cin >> nc;
-        ct[i].NuevoCargo(nc);
+        m[i]->NuevoCargo(nc);
         return true;
      }
    }
@@ -211,15 +185,15 @@ bool Trascend::cambiaCargoCT(string mat){
 
 bool Trascend::cambiaNivelCol(string mat){
    string nn;
-   for(int i=0;i<nCol;i++){
-     if(mat==col[i].getMatricula()){
+   for(int i=0;i<nMiembro;i++){
+     if(mat==m[i]->getMatricula()){
         cout << "Persona encontrada, introduce nuevo nivel \n";
         cin >> nn;
-        col[i].actLvl(nn);
+        col[i]->actLvl(nn);
         return true;
      }
    }
    return false;
 }
-
+*/
 #endif // TRASCEND_H

@@ -10,27 +10,28 @@ class Miembro{
   a traves de las clases que se hereden de esta
   */
   protected:
-      string nombre, matricula;
+      string nombre, matricula, tipoM;
 
   //Métodos
   public:
     Miembro(){}
-    Miembro(string nom,string mat);
+    Miembro(string nom,string mat,string tm);
 
     //Getters
-    string getMatricula();
+    virtual string getNombre(){return nombre;}
+    virtual string getMatricula(){return matricula;}
+    string getTM(){return tipoM;}
+
+    //Metodos abstractos que seran sobreescritos en mesa, ct, col
+    virtual string strMiembro()=0;
 };
 
 //Constructor que recibe parámetros
-Miembro::Miembro(string nom,string mat){
+Miembro::Miembro(string nom,string mat, string tm){
  nombre=nom;
  matricula=mat;
+ tipoM=tm;
 }
-
-string Miembro::getMatricula(){
-   return matricula;
-}
-
 
 
 //clase para la Mesa directiva del grupo que hereda a Miembro
@@ -42,10 +43,14 @@ class Mesa: public Miembro{
   //Nuevas funciones
   public:
     Mesa();
-    Mesa(string nom, string mat, string charge);
+    Mesa(string nom, string mat, string charge, string tm);
+
+    //getters (sobreescritura)
+    string getNombre(){return nombre;}
+    string getMatricula(){return matricula;}
 
     //Metodos
-    string strMesa();
+    string strMiembro();
     void NuevoCargo(string);
 };
 
@@ -53,7 +58,7 @@ class Mesa: public Miembro{
 Mesa::Mesa(){}
 
 //Constructor de mesa
-Mesa::Mesa(string nom, string mat, string charge) : Miembro(nom,mat){
+Mesa::Mesa(string nom, string mat, string tm, string charge) : Miembro(nom,mat,tm){
   cargoMesa=charge;
 }
 
@@ -63,7 +68,7 @@ void Mesa::NuevoCargo(string nc){
 }
 
 //Funcion para obtener el nombre, matricula y cargo en un string
-string Mesa::strMesa(){
+string Mesa::strMiembro(){
   string strM=nombre+"|"+matricula+"|"+cargoMesa;
   return strM;
 }
@@ -79,10 +84,14 @@ class ComiteTecnico: public Miembro{
   //Nuevas funciones
   public:
     ComiteTecnico();
-    ComiteTecnico(string nom,string mat,string charge);
+    ComiteTecnico(string nom,string mat,string tm,string charge);
+
+    //getters (sobreescritura)
+    string getNombre(){return nombre;}
+    string getMatricula(){return matricula;}
 
     //Metodos
-    string strComTec();
+    string strMiembro();
     void NuevoCargo(string);
 };
 
@@ -90,11 +99,11 @@ class ComiteTecnico: public Miembro{
 ComiteTecnico::ComiteTecnico(){}
 
 //Constructor
-ComiteTecnico::ComiteTecnico(string nom,string mat,string charge): Miembro(nom,mat){
+ComiteTecnico::ComiteTecnico(string nom,string mat,string tm,string charge): Miembro(nom,mat,tm){
     cargoCT=charge;
 }
 
-string ComiteTecnico::strComTec(){
+string ComiteTecnico::strMiembro(){
   string strCT=nombre+"|"+matricula+"|"+cargoCT;
   return strCT;
 }
@@ -111,18 +120,22 @@ class Colaboradores: public Miembro{
 
   public:
       Colaboradores();
-      Colaboradores(string,string,string);
+      Colaboradores(string,string,string,string);
+
+      //getters (sobreescritura)
+      string getNombre(){return nombre;}
+      string getMatricula(){return matricula;}
 
       //Metodos
       void actLvl(string);
-      string strColaborador();
+      string strMiembro();
 };
 
 //por default
 Colaboradores::Colaboradores(){}
 
 //Constructor
-Colaboradores::Colaboradores(string nom,string mat,string lvl): Miembro(nom,mat){
+Colaboradores::Colaboradores(string nom,string mat,string tm,string lvl): Miembro(nom,mat,tm){
     nivel=lvl;
 }
 
@@ -130,7 +143,7 @@ void Colaboradores::actLvl(string nuevo_nivel){
     nivel=nuevo_nivel;
 }
 
-string Colaboradores::strColaborador(){
+string Colaboradores::strMiembro(){
   string strCol=nombre+"|"+matricula+"|"+nivel;
   return strCol;
 }

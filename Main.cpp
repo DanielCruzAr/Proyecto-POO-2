@@ -20,17 +20,15 @@ using namespace std;
 void menu(){
  cout <<"\n";
  cout << "Opcion 1: agregar fondos \n";
- cout << "Opcion 2: ver integrantes de mesa \n";
- cout << "Opcion 3: ver integrantes del comite tecnico \n";
- cout << "Opcion 4: ver colaboradores \n";
- cout << "Opcion 5: agregar integrante de mesa \n";
- cout << "Opcion 6: agregar integrante de comite tecnico \n";
- cout << "Opcion 7: agregar colaborador \n";
- cout << "Opcion 8: cambiar el cargo de mesa de una persona \n";
- cout << "Opcion 9: cambiar el cargo de comite tecnico de una persona \n";
- cout << "Opcion 10: cambiar el nivel de colaborador de una persona \n";
- cout << "Opcion 11: ver informacion de mesa, comite tecnico y colaboradores \n";
- cout << "Opcion 12: salir \n";
+ cout << "Opcion 2: ver integrantes de transcend por tipo \n";
+ cout << "Opcion 3: agregar integrante de mesa \n";
+ cout << "Opcion 4: agregar integrante de comite tecnico \n";
+ cout << "Opcion 5: agregar colaborador \n";
+ cout << "Opcion 6: cambiar el cargo de mesa de una persona \n";
+ cout << "Opcion 7: cambiar el cargo de comite tecnico de una persona \n";
+ cout << "Opcion 8: cambiar el nivel de colaborador de una persona \n";
+ cout << "Opcion 9: ver informacion de mesa, comite tecnico y colaboradores \n";
+ cout << "Opcion 10: salir \n"; cout << "NOTA: 6,7 y 8 estan temporalmente deshabilitados \n";
 }
 
 int main(){
@@ -43,16 +41,14 @@ int main(){
 
    /*El grupo ya cuenta con miembros en la mesa directiva y en el comite tecnico
    por lo que la lista se llena automaticamente con los miembros existentes*/
-   trascend.llenaMesa();
-   trascend.llenaCT();
-   trascend.llenaCol();
+   trascend.llenaMiembros();
 
    int opcion=0;
    float fond;
-   string nom,apellido,mat,carg;
+   string nom,apellido,mat,carg,member,tm;
    string lvl="C"; //Todos empiezan en el nivel C;
 
-   while(opcion <12 && opcion >-1){
+   while(opcion <7 && opcion >-1){
       menu();
       cin >> opcion;
 
@@ -66,53 +62,48 @@ int main(){
              break;
 
          case 2:
-             cout << "NOMBRE|MATRICULA|CARGO" << endl;
-             trascend.printMesa();
+             cout << "Introduce el tipo de miembro (mesa ,CT o colaborador) \n";
+             cin >> member;
+             cout << "NOMBRE|MATRICULA|CARGO o NIVEL" << endl;
+             trascend.printMiembro(member);
              break;
 
          case 3:
-             cout << "NOMBRE|MATRICULA|CARGO CT" << endl;
-             trascend.printCT();
-             break;
-
-         case 4:
-            cout << "NOMBRE|MATRICULA|NIVEL" << endl;
-            trascend.printColaboradores();
-            break;
-
-         case 5:
+             tm="mesa";
              cout << "Introduce los datos de la persona";
              cout <<"\n Nombre: "; cin >> nom;
              cout <<"\n Apellido: "; cin >> apellido;
              cout << "\n Matricula: "; cin >> mat;
              cout << "\n Cargo de mesa: "; cin >> carg;
              nom=nom+" "+apellido;
-             trascend.agregaMesa(nom,mat,carg);
+             trascend.agregaMesa(nom,mat,tm,carg);
              cout << "Se ha registrado un nuevo miembro de mesa \n";
              break;
 
-        case 6:
+        case 4:
+             tm="CT";
              cout << "Introduce los datos de la persona";
              cout <<"\n Nombre: "; cin >> nom;
              cout <<"\n Apellido: "; cin >> apellido;
              cout << "\n Matricula: "; cin >> mat;
              cout << "\n Cargo de comite tecnico: "; cin >> carg;
              nom=nom+" "+apellido;
-             trascend.agregaCT(nom,mat,carg);
+             trascend.agregaCT(nom,mat,tm,carg);
              cout << "Se ha registrado un nuevo miembro del comite tecnico \n";
              break;
 
-        case 7:
+        case 5:
+             tm="colaborador";
              cout << "Introduce los datos de la persona";
              cout <<"\n Nombre: "; cin >> nom;
              cout <<"\n Apellido: "; cin >> apellido;
              cout << "\n Matricula: "; cin >> mat;
              nom=nom+" "+apellido;
-             trascend.agregaColaborador(nom,mat,lvl);
+             trascend.agregaColaborador(nom,mat,tm,lvl);
              cout << "Se ha registrado un nuevo colaborador \n";
              break;
-
-        case 8:
+        /* Funciones suspendidas temporalmente
+        case 6:
             cout << "Introduce la matricula de la persona a la que se le quiera cambiar el cargo \n";
             cin >> mat;
             if(trascend.cambiaCargoM(mat)==false){
@@ -120,7 +111,7 @@ int main(){
             }
             break;
 
-        case 9:
+        case 7:
             cout << "Introduce la matricula de la persona a la que se le quiera cambiar el cargo \n";
             cin >> mat;
             if(trascend.cambiaCargoCT(mat)==false){
@@ -128,15 +119,16 @@ int main(){
             }
             break;
 
-        case 10:
+        case 8:
             cout << "Introduce la matricula del colaborador al que se le quiere cambiar el nivel \n";
             cin >> mat;
             if(trascend.cambiaNivelCol(mat)==false){
                 cout << "Colaborador no encontrado \n";
             }
             break;
+            */
 
-        case 11:
+        case 6:
             cout << "MESA";
             trascend.infoMesa();
             cout << "COMITE TECNICO";
@@ -146,5 +138,6 @@ int main(){
             break;
       }
    }
+   trascend.borra(); //eliminar los objetos creados para que no afecten en la memoria
 return 0;
 }
