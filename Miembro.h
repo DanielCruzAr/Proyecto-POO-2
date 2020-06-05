@@ -24,6 +24,7 @@ class Miembro{
 
     //Metodos abstractos que seran sobreescritos en mesa, ct, col
     virtual string strMiembro()=0;
+    virtual void NuevoCargo(string)=0;
 };
 
 //Constructor que recibe parámetros
@@ -127,7 +128,7 @@ class Colaboradores: public Miembro{
       string getMatricula(){return matricula;}
 
       //Metodos
-      void actLvl(string);
+      void NuevoCargo(string);
       string strMiembro();
 };
 
@@ -139,7 +140,7 @@ Colaboradores::Colaboradores(string nom,string mat,string tm,string lvl): Miembr
     nivel=lvl;
 }
 
-void Colaboradores::actLvl(string nuevo_nivel){
+void Colaboradores::NuevoCargo(string nuevo_nivel){
     nivel=nuevo_nivel;
 }
 

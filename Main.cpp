@@ -24,11 +24,9 @@ void menu(){
  cout << "Opcion 3: agregar integrante de mesa \n";
  cout << "Opcion 4: agregar integrante de comite tecnico \n";
  cout << "Opcion 5: agregar colaborador \n";
- cout << "Opcion 6: cambiar el cargo de mesa de una persona \n";
- cout << "Opcion 7: cambiar el cargo de comite tecnico de una persona \n";
- cout << "Opcion 8: cambiar el nivel de colaborador de una persona \n";
- cout << "Opcion 9: ver informacion de mesa, comite tecnico y colaboradores \n";
- cout << "Opcion 10: salir \n"; cout << "NOTA: 6,7 y 8 estan temporalmente deshabilitados \n";
+ cout << "Opcion 6: cambiar el cargo de mesa, comite tecnico o colaborador de una persona \n";
+ cout << "Opcion 7: ver informacion de mesa, comite tecnico y colaboradores \n";
+ cout << "Opcion 8: salir \n";
 }
 
 int main(){
@@ -40,7 +38,8 @@ int main(){
    cout << "\n Fondos: " << trascend.getFondos() << endl;
 
    /*El grupo ya cuenta con miembros en la mesa directiva y en el comite tecnico
-   por lo que la lista se llena automaticamente con los miembros existentes*/
+   por lo que la lista se llena automaticamente con los miembros existentes.
+   El colaborador es un ejemplo*/
    trascend.llenaMiembros();
 
    int opcion=0;
@@ -48,7 +47,7 @@ int main(){
    string nom,apellido,mat,carg,member,tm;
    string lvl="C"; //Todos empiezan en el nivel C;
 
-   while(opcion <7 && opcion >-1){
+   while(opcion <8 && opcion >-1){
       menu();
       cin >> opcion;
 
@@ -102,33 +101,16 @@ int main(){
              trascend.agregaColaborador(nom,mat,tm,lvl);
              cout << "Se ha registrado un nuevo colaborador \n";
              break;
-        /* Funciones suspendidas temporalmente
+
         case 6:
             cout << "Introduce la matricula de la persona a la que se le quiera cambiar el cargo \n";
             cin >> mat;
-            if(trascend.cambiaCargoM(mat)==false){
+            if(trascend.cambiaCargo(mat)==false){
                 cout << "Persona no encontrada \n";
             }
             break;
 
         case 7:
-            cout << "Introduce la matricula de la persona a la que se le quiera cambiar el cargo \n";
-            cin >> mat;
-            if(trascend.cambiaCargoCT(mat)==false){
-                cout << "Persona no encontrada \n";
-            }
-            break;
-
-        case 8:
-            cout << "Introduce la matricula del colaborador al que se le quiere cambiar el nivel \n";
-            cin >> mat;
-            if(trascend.cambiaNivelCol(mat)==false){
-                cout << "Colaborador no encontrado \n";
-            }
-            break;
-            */
-
-        case 6:
             cout << "MESA";
             trascend.infoMesa();
             cout << "COMITE TECNICO";

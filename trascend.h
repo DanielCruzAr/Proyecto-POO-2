@@ -11,8 +11,10 @@ class Trascend{
   private:
 
     Miembro *m[CUPO]; //Apuntador
+    Miembro *ct[CUPO];
+    Miembro *col[CUPO];
 
-    int nMiembro;
+    int nMesa,nCT,nCol;
     float fondos;
 
   public:
@@ -38,17 +40,19 @@ class Trascend{
     void agregaCT(string,string,string,string);
     void agregaColaborador(string,string,string,string);
     void agregaFondos(float);
-    bool cambiaCargoM(string);
-    bool cambiaCargoCT(string);
-    bool cambiaNivelCol(string);
+    bool cambiaCargo(string);
 
     //borrar
-    void borra(){for(int i=0;i<nMiembro;i++){delete m[i];}}
+    void borra(){for(int i=0;i<nMesa;i++){delete m[i];}
+    for(int i=0;i<nCT;i++){delete ct[i];}
+    for(int i=0;i<nCol;i++){delete col[i];}}
 
 };
 
 Trascend::Trascend(){
- nMiembro=0;
+ nMesa=0;
+ nCT=0;
+ nCol=0;
  fondos=0;
 
 }
@@ -56,33 +60,43 @@ Trascend::Trascend(){
 void Trascend::llenaMiembros(){
 
     //mesa
-    m[nMiembro]=new Mesa("Carlos Sanchez","A01702188","mesa","presidente");
-    nMiembro++;
-    m[nMiembro]=new Mesa("Rafael Romo","A01701493","mesa","vicepresidente");
-    nMiembro++;
-    m[nMiembro]=new Mesa("Alejandra Lopez","A01702071","mesa","tesoreria");
-    nMiembro++;
-    m[nMiembro]=new Mesa("Romina Gramlich","A01701313","mesa","publicidad");
-    nMiembro++;
-    m[nMiembro]=new Mesa("Daniel Cruz","A01701370","mesa","patrocinios");
-    nMiembro++;
+    m[nMesa]=new Mesa("Carlos Sanchez","A01702188","mesa","presidente");
+    nMesa++;
+    m[nMesa]=new Mesa("Rafael Romo","A01701493","mesa","vicepresidente");
+    nMesa++;
+    m[nMesa]=new Mesa("Alejandra Lopez","A01702071","mesa","tesoreria");
+    nMesa++;
+    m[nMesa]=new Mesa("Romina Gramlich","A01701313","mesa","publicidad");
+    nMesa++;
+    m[nMesa]=new Mesa("Daniel Cruz","A01701370","mesa","patrocinios");
+    nMesa++;
 
     //ct
-    m[nMiembro]=new ComiteTecnico("Emilio Valdez","A01704832","CT","cursos");
-    nMiembro++;
-    m[nMiembro]=new ComiteTecnico("Balam Bravo","A01703834","CT","cursos");
-    nMiembro++;
+    ct[nCT]=new ComiteTecnico("Emilio Valdez","A01704832","CT","cursos");
+    nCT++;
+    ct[nCT]=new ComiteTecnico("Balam Bravo","A01703834","CT","cursos");
+    nCT++;
 
     //col
-    m[nMiembro]=new Colaboradores("Juan Pérez","A00000000","colaborador","C");
-    nMiembro++;
+    col[nCol]=new Colaboradores("Juan Perez","A00000000","colaborador","C");
+    nCol++;
 
 }
 
 void Trascend::printMiembro(string member){
-    for(int i=0;i<nMiembro;i++){
+    for(int i=0;i<nMesa;i++){
         if(m[i]->getTM()==member){
             cout << m[i]->strMiembro() << endl;
+        }
+    }
+    for(int i=0;i<nCT;i++){
+        if(ct[i]->getTM()==member){
+            cout << ct[i]->strMiembro() << endl;
+        }
+    }
+    for(int i=0;i<nCol;i++){
+        if(col[i]->getTM()==member){
+            cout << col[i]->strMiembro() << endl;
         }
     }
 }
@@ -130,70 +144,49 @@ void Trascend::infoCol(){
 }
 
 void Trascend::agregaMesa(string nom,string mat,string tm,string carg){
-    m[nMiembro]=new Mesa(nom,mat,tm,carg);
-    nMiembro++;
+    m[nMesa]=new Mesa(nom,mat,tm,carg);
+    nMesa++;
 }
 
 
 void Trascend::agregaCT(string nom,string mat,string tm,string carg){
-    m[nMiembro]=new ComiteTecnico(nom,mat,tm,carg);
-    nMiembro++;
+    ct[nCT]=new ComiteTecnico(nom,mat,tm,carg);
+    nCT++;
 }
 
 void Trascend::agregaColaborador(string nom,string mat,string tm,string lvl){
-    m[nMiembro]=new Colaboradores(nom,mat,tm,lvl);
-    nMiembro++;
+    col[nCol]=new Colaboradores(nom,mat,tm,lvl);
+    nCol++;
 }
 
 void Trascend::agregaFondos(float fond){
    fondos=fondos+fond;
 }
 
-/*
-Las 2 funciones a continuacion primero reciben un string con la matricula del alumno que se
-quiera buscar para cambiarle el rango si pretenece a la mesa o al comite tecnico.
-Si la funcion encuentra al alumno, pide un input con el nuevo cargo y devuelve verdadero.
-Si no lo encuentra devuelve false.
-
-Sin embargo aun tengo que ajustarlas al polimorfismo
-
-bool Trascend::cambiaCargoM(string mat){
+bool Trascend::cambiaCargo(string mat){
    string nc;
-   for(int i=0;i<nMiembro;i++){
+   for(int i=0;i<nMesa;i++){
      if(mat==m[i]->getMatricula()){
         cout << "Persona encontrada, introduce nuevo cargo \n";
         cin >> nc;
         m[i]->NuevoCargo(nc);
-        return true;
-     }
+        return true;}
    }
-   return false;
-}
-
-bool Trascend::cambiaCargoCT(string mat){
-   string nc;
-   for(int i=0;i<nMiembro;i++){
-     if(mat==m[i]->getMatricula()){
+   for(int i=0;i<nCT;i++){
+     if(mat==ct[i]->getMatricula()){
         cout << "Persona encontrada, introduce nuevo cargo \n";
         cin >> nc;
-        m[i]->NuevoCargo(nc);
-        return true;
-     }
+        ct[i]->NuevoCargo(nc);
+        return true;}
+   }
+   for(int i=0;i<nCT;i++){
+     if(mat==col[i]->getMatricula()){
+        cout << "Persona encontrada, introduce nuevo cargo \n";
+        cin >> nc;
+        col[i]->NuevoCargo(nc);
+        return true;}
    }
    return false;
 }
 
-bool Trascend::cambiaNivelCol(string mat){
-   string nn;
-   for(int i=0;i<nMiembro;i++){
-     if(mat==m[i]->getMatricula()){
-        cout << "Persona encontrada, introduce nuevo nivel \n";
-        cin >> nn;
-        col[i]->actLvl(nn);
-        return true;
-     }
-   }
-   return false;
-}
-*/
 #endif // TRASCEND_H
