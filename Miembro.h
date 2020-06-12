@@ -4,6 +4,10 @@
 
 using namespace std;
 
+/*
+Miembro será clase abstracta ya que se utilizarán las funciones
+que
+*/
 class Miembro{
   /*
   Atributos de instancia. Estos son accesibles
@@ -18,7 +22,6 @@ class Miembro{
     Miembro(string nom,string mat,string tm);
 
     //Getters
-    virtual string getNombre(){return nombre;}
     virtual string getMatricula(){return matricula;}
     string getTM(){return tipoM;}
 
@@ -37,20 +40,19 @@ Miembro::Miembro(string nom,string mat, string tm){
 
 //clase para la Mesa directiva del grupo que hereda a Miembro
 class Mesa: public Miembro{
-  //Nuevos atributos
+  //Variables de instancia privadas
   private:
     string cargoMesa;
 
-  //Nuevas funciones
+  //Métodos
   public:
     Mesa();
     Mesa(string nom, string mat, string charge, string tm);
 
     //getters (sobreescritura)
-    string getNombre(){return nombre;}
     string getMatricula(){return matricula;}
 
-    //Metodos
+    //Funciones
     string strMiembro();
     void NuevoCargo(string);
 };
@@ -68,7 +70,11 @@ void Mesa::NuevoCargo(string nc){
   cargoMesa=nc;
 }
 
-//Funcion para obtener el nombre, matricula y cargo en un string
+/*
+*Funcion para obtener el nombre, matricula y cargo en un string
+*Regresa un string que será ocupado para la impresión desde otra
+función.
+*/
 string Mesa::strMiembro(){
   string strM=nombre+"|"+matricula+"|"+cargoMesa;
   return strM;
@@ -78,20 +84,19 @@ string Mesa::strMiembro(){
 
 //clase para el comite tecnico del grupo, que hereda a Miembro
 class ComiteTecnico: public Miembro{
-  //Nuevos atributos
+  //Variables de instancia privadas
   private:
     string cargoCT;
 
-  //Nuevas funciones
+  //Métodos
   public:
     ComiteTecnico();
     ComiteTecnico(string nom,string mat,string tm,string charge);
 
     //getters (sobreescritura)
-    string getNombre(){return nombre;}
     string getMatricula(){return matricula;}
 
-    //Metodos
+    //Funciones
     string strMiembro();
     void NuevoCargo(string);
 };
@@ -104,6 +109,11 @@ ComiteTecnico::ComiteTecnico(string nom,string mat,string tm,string charge): Mie
     cargoCT=charge;
 }
 
+/*
+*Funcion para obtener el nombre, matricula y cargo en un string
+*Regresa un string que será ocupado para la impresión desde otra
+función.
+*/
 string ComiteTecnico::strMiembro(){
   string strCT=nombre+"|"+matricula+"|"+cargoCT;
   return strCT;
@@ -116,18 +126,19 @@ void ComiteTecnico::NuevoCargo(string nuevo_cargo){
 
 //clase para los Colaboradores que hereda a miembros
 class Colaboradores: public Miembro{
+  //Variables de instancia privadas
   private:
       string nivel;
 
+  //Métodos
   public:
       Colaboradores();
       Colaboradores(string,string,string,string);
 
       //getters (sobreescritura)
-      string getNombre(){return nombre;}
       string getMatricula(){return matricula;}
 
-      //Metodos
+      //Funciones
       void NuevoCargo(string);
       string strMiembro();
 };
@@ -144,6 +155,11 @@ void Colaboradores::NuevoCargo(string nuevo_nivel){
     nivel=nuevo_nivel;
 }
 
+/*
+*Funcion para obtener el nombre, matricula y cargo en un string
+*Regresa un string que será ocupado para la impresión desde otra
+función.
+*/
 string Colaboradores::strMiembro(){
   string strCol=nombre+"|"+matricula+"|"+nivel;
   return strCol;

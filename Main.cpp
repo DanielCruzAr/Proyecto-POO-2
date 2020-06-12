@@ -46,6 +46,7 @@ int main(){
    float fond;
    string nom,apellido,mat,carg,member,tm;
    string lvl="C"; //Todos empiezan en el nivel C;
+   bool aux;
 
    while(opcion <8 && opcion >-1){
       menu();
@@ -105,9 +106,9 @@ int main(){
         case 6:
             cout << "Introduce la matricula de la persona a la que se le quiera cambiar el cargo \n";
             cin >> mat;
-            if(trascend.cambiaCargo(mat)==false){
-                cout << "Persona no encontrada \n";
-            }
+            aux=trascend.cambiaCargo(mat);
+            if(aux==false){
+                cout << "Persona no encontrada \n";}
             break;
 
         case 7:

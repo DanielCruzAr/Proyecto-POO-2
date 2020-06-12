@@ -9,10 +9,10 @@ const int CUPO=50;
 
 class Trascend{
   private:
-
-    Miembro *m[CUPO]; //Apuntador
-    Miembro *ct[CUPO];
-    Miembro *col[CUPO];
+    //apuntadores
+    Miembro *m[CUPO]; //Lista de mesa
+    Miembro *ct[CUPO]; //Lista de comite tecnico
+    Miembro *col[CUPO]; //Lista de colaboradores
 
     int nMesa,nCT,nCol;
     float fondos;
@@ -57,7 +57,7 @@ Trascend::Trascend(){
 
 }
 
-void Trascend::llenaMiembros(){
+void Trascend::llenaMiembros(){ //Funcion que crea los miembros actaules de Transcend
 
     //mesa
     m[nMesa]=new Mesa("Carlos Sanchez","A01702188","mesa","presidente");
@@ -78,12 +78,13 @@ void Trascend::llenaMiembros(){
     nCT++;
 
     //col
-    col[nCol]=new Colaboradores("Juan Perez","A00000000","colaborador","C");
+    col[nCol]=new Colaboradores("Juan Perez","A00000000","colaborador","C"); //Ejemplo de colaborador
     nCol++;
 
 }
 
-void Trascend::printMiembro(string member){
+void Trascend::printMiembro(string member){ //Función que recibe un tipo de miembro (Mesa, CT o colaborador)
+    //e imprime todos los miembros que haya en mesa, comite técnico o colaboradores
     for(int i=0;i<nMesa;i++){
         if(m[i]->getTM()==member){
             cout << m[i]->strMiembro() << endl;
@@ -100,7 +101,7 @@ void Trascend::printMiembro(string member){
         }
     }
 }
-
+//Las siguientes funciones solo imprimen información del grupo
 void Trascend::informacion(){
  cout << "\n Somos un grupo estudiantil con el propósito de";
  cout << "\n fomentar el balance en las 7 dimensiones que conforman";
@@ -143,26 +144,37 @@ void Trascend::infoCol(){
       << "\n Colaborar en vendimias, logística y difusión del grupo. \n" << endl;
 }
 
+//Función que recibe parámatros para crear un nuevo objeto Mesa y lo agregue a la lista *m[]
 void Trascend::agregaMesa(string nom,string mat,string tm,string carg){
     m[nMesa]=new Mesa(nom,mat,tm,carg);
     nMesa++;
 }
 
-
+//Función que recibe parámatros para crear un nuevo objeto ComiteTecnico y lo agregue a la lista *ct[]
 void Trascend::agregaCT(string nom,string mat,string tm,string carg){
     ct[nCT]=new ComiteTecnico(nom,mat,tm,carg);
     nCT++;
 }
 
+//Función que recibe parámatros para crear un nuevo objeto Colaborador y lo agregue a la lista *col[]
 void Trascend::agregaColaborador(string nom,string mat,string tm,string lvl){
     col[nCol]=new Colaboradores(nom,mat,tm,lvl);
     nCol++;
 }
-
+/*
+Función que le suma un input flotante a fondos
+*/
 void Trascend::agregaFondos(float fond){
    fondos=fondos+fond;
 }
 
+/*
+*Función que recibe una matrícula y busca entre todos los miembros, si coincide con alguna llama a la función
+*NuevoCargo en Miembro.h para cambiar el cargo de la persona ya sea de mesa, comite tecnico o colaborador7
+*En el ciclo for, si el parámetro de entrada mat es igual a la función getMatricula del objeto (la cual nos regresa
+*un string con la matrícula) entonces nos permite actualizar el cargo y la función regresa true,
+si no es igual sigue buscando, si hay coincidencias entonces regresa false.
+*/
 bool Trascend::cambiaCargo(string mat){
    string nc;
    for(int i=0;i<nMesa;i++){
@@ -186,7 +198,6 @@ bool Trascend::cambiaCargo(string mat){
         col[i]->NuevoCargo(nc);
         return true;}
    }
-   return false;
-}
+return false;}
 
 #endif // TRASCEND_H
